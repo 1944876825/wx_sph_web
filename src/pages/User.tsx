@@ -21,6 +21,10 @@ const items: MenuProps['items'] = [
         icon: <CompassFilled />,
     },
     {
+        label: 'AI 配置',
+        key: 'toAIConfig',
+    },
+    {
         label: '退出登录',
         key: 'outlogin',
         icon: <LogoutOutlined />,
@@ -39,6 +43,11 @@ const handleMenuClick: MenuProps['onClick'] = (e) => {
         message.success("正在跳转")
         setTimeout(()=>{
             window.location.href = "./#/panel"
+        }, 500)
+    } else if (e.key == 'toAIConfig') {
+        message.success("正在跳转")
+        setTimeout(()=>{
+            window.location.href = "./#/ai-config"
         }, 500)
     } else if (e.key == "addAccount") {
         message.success("正在跳转")

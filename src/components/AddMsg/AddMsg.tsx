@@ -1,4 +1,4 @@
-import { Form, FormProps, Input, message, Modal } from "antd";
+import { Form, FormProps, Input, message, Modal, Switch } from "antd";
 import UploadComponent from "../../pages/Upload";
 import { useEffect, useState } from "react";
 import axiosInstance from "../../request/base";
@@ -16,6 +16,8 @@ const AddMsg = (props: { mid: number; open: boolean; Ok: VoidFunction; Cancel: V
                 form.setFieldsValue({
                     title: data.title,
                     text: data.text,
+                    useAI: data.useAI || false,
+                    systemPrompt: data.systemPrompt || '',
                 });
             } else {
                 console.log(response.data)
@@ -50,6 +52,8 @@ const AddMsg = (props: { mid: number; open: boolean; Ok: VoidFunction; Cancel: V
     type FieldType = {
         title?: string;
         text?: string;
+        useAI?: boolean;
+        systemPrompt?: string;
     }
     
     const handleOk = () => {
@@ -69,6 +73,25 @@ const AddMsg = (props: { mid: number; open: boolean; Ok: VoidFunction; Cancel: V
                     </Form.Item>
                     <Form.Item<FieldType> name="text" label="文字消息" className="form-item">
                         <Input.TextArea rows={2} placeholder="请输入自动回复的文字内容" />
+                    </Form.Item>
+                    <Form.Item label="AI 智能回复" name="useAI" valuePropName="checked">
+                        <Switch checkedChildren="开启" unCheckedChildren="关闭" />
+                    </Form.Item>
+                    <Form.Item noStyle shouldUpdate={(prev, cur) => prev.useAI !== cur.useAI}>
+                        {({ getFieldValue }) =>
+                            getFieldValue("useAI") ? (
+                                <Form.Item
+                                    label="系统提示词"
+                                    name="systemPrompt"
+                                    tooltip="自定义 AI 回复的角色和风格，留空则使用全局默认提示词"
+                                >
+                                    <Input.TextArea
+                                        rows={3}
+                                        placeholder="例如：你是一个专业的美妆顾问，用亲切的语气回复..."
+                                    />
+                                </Form.Item>
+                            ) : null
+                        }
                     </Form.Item>
                     <Form.Item label="图片消息">
                         <UploadComponent mid={mid} />

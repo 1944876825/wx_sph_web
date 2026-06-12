@@ -141,6 +141,7 @@ const Panel = () => {
                         <h1 className="pageTitle">账号列表</h1>
                     </Space>
                     <Space>
+                        <Button onClick={()=>{ window.location.href = "./#/ai-config" }} size='large'>🤖 AI 配置</Button>
                         <Button onClick={()=>history.back()} size='large' icon={<LeftOutlined />}>返回</Button>
                     </Space>
                 </div>
